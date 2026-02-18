@@ -13,3 +13,13 @@ Deploy to Render (using GitHub)
 11. For updates, push to the connected branch; Render will auto-deploy.
 
 Each step is brief; adjust `MONGO_URI` and branch as needed.
+
+
+Do not leave MONGO_URI as mongodb://localhost:27017/... — that points to the container itself and will fail on Render.
+Easiest option: create a MongoDB Atlas cluster.
+Create Atlas account → Create Cluster → Create Database User (username/password) → Network Access (allow Render IPs or 0.0.0.0/0 for testing).
+Copy the connection string and replace <user>, <password>, <dbname>.
+Example: mongodb+srv://<user>:<password>@cluster0.abcdef.mongodb.net/employee-db?retryWrites=true&w=majority
+In Render: open your service → Environment → Add MONGO_URI with the Atlas connection string → Redeploy.
+Alternatives: use any hosted MongoDB service reachable from the internet or run MongoDB in a publicly accessible server (not recommended for production).
+Local testing: run MongoDB locally or via Docker:
